@@ -22,7 +22,11 @@ pub fn get_symbols<'a>(lines: &Vec<&'a str>) -> Result<HashMap<&'a str, String>,
             return Err(format!("Invalid symbol exists [{0}]", line));
         }
 
-        if let Some(next) = lines.get(i + 1) {
+        let mut j = 0;
+
+        while let Some(next) = lines.get(i + j) {
+            j += 1;
+
             if next.starts_with("(") {
                 continue;
             }
@@ -38,6 +42,8 @@ pub fn get_symbols<'a>(lines: &Vec<&'a str>) -> Result<HashMap<&'a str, String>,
                 }
 
                 symbols.insert(key, isc_number.to_string());
+
+                break;
             } else {
                 return Err(format!("Invalid instructions exists [{0}]", next));
             }
