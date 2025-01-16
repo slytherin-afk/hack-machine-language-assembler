@@ -1,3 +1,4 @@
+// PROGRAM THAT USE SHIFT OPERATION TO MULTIPLY TWO NUMBERS
 @multipicand
 @multiplier
 
