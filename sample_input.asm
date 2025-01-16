@@ -1,0 +1,104 @@
+@multipicand
+@multiplier
+
+// SET MAX ITERATION
+@8
+D=A
+@max_iteration
+M=D
+
+// WE ARE ON THIS ITERATION
+@current_iteration
+M=0
+
+// VARIABLE TO GET BIT OF MULTIPLIER
+@multiplier_bit_checker
+M=1
+
+// THIS STORES THE RESULT
+@result
+M=0
+
+// START OF THE SHIFT
+(START_ITERATION)
+
+// END IF ITERATIONS ENDED
+@max_iteration
+D=M
+@current_iteration
+D=D-M
+@END
+D;JEQ
+
+//CHECK FOR BIT
+@multiplier
+D=M
+@multiplier_bit_checker
+D=D&M
+
+// IF BIT 0 DON'T DO ANY SHIFT
+@EPILOGUE
+D;JEQ
+
+// IF BIT 1 DO SHIFTS
+// SET VARIBLE TO THE MULTIPLICAND FOR THE SHIFT TO BE PERFORMED ON
+@multipicand    
+D=M
+@shifted
+M=D
+// WE ARE CURRENTLY ON THIS SHIFT
+@nth_shift
+M=0
+
+(START_OF_SHIFT)
+// END IF NTH SHIFT EQUALS ITERATION
+@current_iteration
+D=M
+@nth_shift
+D=D-M
+@ADD_RESULT_SHIFTED
+D;JEQ
+
+// DO SHIFT ON MULTIPLICAND STORED IN SHIFTED VARIABLES
+@shifted
+D=M
+M=D+M
+
+// ADD ONE TO NTH SHIFT
+@nth_shift
+M=M+1
+
+// GO TO NEXT SHIFT
+@START_OF_SHIFT
+0;JEQ
+
+(ADD_RESULT_SHIFTED)
+// ADD SHIFTED TO THE RESULT
+@shifted
+D=M
+@result
+M=D+M
+
+(EPILOGUE)
+// LEFT SHIFT BIT CHECKER
+@multiplier_bit_checker
+D=M
+M=D+M
+
+// ADD ONE TO ITERATION
+@current_iteration
+M=M+1
+
+// GO TO NEXT ITERATION
+@START_ITERATION
+0;JMP
+
+
+(END)
+@result
+D=M
+@R0
+M=D
+(MEND)
+@MEND
+0;JMP
