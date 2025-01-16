@@ -1,0 +1,7 @@
+[package]
+name = "hack-machine-language-assembler"
+description = "Assembler for the Hack Machine Language defined in Nand-2-Tetris."
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
