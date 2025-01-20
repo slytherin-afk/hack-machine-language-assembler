@@ -23,6 +23,7 @@ pub fn get_symbols<'a>(lines: &Vec<&'a str>) -> Result<HashMap<&'a str, String>,
         }
 
         let mut j = 0;
+        let key = &line[1..line.len() - 1];
 
         while let Some(next) = lines.get(i + j) {
             j += 1;
@@ -35,8 +36,6 @@ pub fn get_symbols<'a>(lines: &Vec<&'a str>) -> Result<HashMap<&'a str, String>,
                 .iter()
                 .any(|&prefix| next.starts_with(prefix))
             {
-                let key = &line[1..line.len() - 1];
-
                 if symbols.contains_key(key) {
                     return Err(format!("Duplicate symbol exists [{0}]", line));
                 }
@@ -48,6 +47,8 @@ pub fn get_symbols<'a>(lines: &Vec<&'a str>) -> Result<HashMap<&'a str, String>,
                 return Err(format!("Invalid instructions exists [{0}]", next));
             }
         }
+
+        symbols.insert(key, isc_number.to_string());
     }
 
     Ok(symbols)
